@@ -25,7 +25,7 @@ def graph_traversal_sum(values_in, connections_in, nodes_start, nodes_end):
 
     # ToDo: Write your code here, calculating the graph traversal sum
     assert(len(nodes_end) == 1)
-    node_end = e = next(iter(nodes_end))
+    node_end = next(iter(nodes_end))
     calculate_values_recursive(node_end, values, connections, nodes_start)
 
     return values
