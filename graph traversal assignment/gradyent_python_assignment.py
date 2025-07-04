@@ -59,7 +59,8 @@ def calculate_values_recursive(node, values, connections_in, nodes_start, node_p
             calculate_values_recursive(n, values, connections_in, nodes_start, node_prev = node)
         
         # Calculate values for current node
-        values[:,node] = sum([values[:,n] for n in neighbours_non_visited])
+        # values[:,node] = sum([values[:,n] for n in neighbours_non_visited])
+        values[:,node] = np.sum(values[:,neighbours_non_visited], axis=1) # much faster
 
 
 
