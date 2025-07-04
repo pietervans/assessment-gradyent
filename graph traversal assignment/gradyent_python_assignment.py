@@ -12,18 +12,20 @@ INCLUDE_OPTIONAL_ASSIGNMENT = True
 
 
 def graph_traversal_sum(values_in, connections_in, nodes_start, nodes_end):
-    """ ToDo: Write a docstring
-    :param values_in: numpy 2d array of dimension m x len(network_to_use.nodes)
-    :param connections_in:
-    :param nodes_start:
-    :param nodes_end:
-    :return:
+    """ Calculate the sum of the values in all nodes using the given values in the starting nodes.
+    Values in is vectorized, the function is run for m=values_in.shape[0] starting values at once.
+
+    :param values_in: numpy 2d array with initial values of nodes_start of dimension m x n with m=#(different starting values) and n=#nodes
+    :param connections_in: numpy 2d array with adjacency matrix of dimension n by n
+    :param nodes_start: set with start nodes (leaves of the tree graph)
+    :param nodes_end: set with 1 "source node" = root node
+    :return values_out: numpy 2d array with the final values for all nodes for all m different starting values, dimension m x n
     """
     # Make sure that original objects are not changed
     values = values_in.copy()
     connections = connections_in.copy()
 
-    # ToDo: Write your code here, calculating the graph traversal sum
+    # Calculate the graph traversal sum
     assert(len(nodes_end) == 1)
     node_end = next(iter(nodes_end))
     calculate_values_recursive(node_end, values, connections, nodes_start)
@@ -31,7 +33,17 @@ def graph_traversal_sum(values_in, connections_in, nodes_start, nodes_end):
     return values
 
 
-def calculate_values_recursive(node, values, connections_in, nodes_start, node_prev=None):
+def calculate_values_recursive(node, values, connections_in, nodes_start, node_prev=None) -> None:
+    """ Recursive function to calculate the sums for every individual node.
+
+    :param node: the current node
+    :param values: numpy 2d array with current values of nodes_start of dimension m x n with m=#(different starting values) and n=#nodes.
+        NOTE: the array is passed by reference!
+    :param connections_in: numpy 2d array with adjacency matrix of dimension n by n
+    :param nodes_start: set with start nodes (leaves of the tree graph)
+    :param node_prev: the parent node of the current node
+    :return: None
+    """
 
     if node in nodes_start:
         # value is already in the np.ndarray values, we're done!
@@ -232,8 +244,6 @@ class TestGraphTraversal(TestCase):
         print(f'Execution time for {number_of_executions} run(s): {run_time}')
 
         return values, values_out, average_run_time
-
-
 
 
 if __name__ == '__main__':
